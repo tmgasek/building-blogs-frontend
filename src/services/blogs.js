@@ -1,5 +1,4 @@
 import axios from 'axios';
-// const baseUrl = 'http://localhost:3001/api/blogs';
 const baseUrl = '/api/blogs';
 
 const getAll = () => {
@@ -7,8 +6,8 @@ const getAll = () => {
   return req.then((res) => res.data);
 };
 
-const exports = {
+const blogService = {
   getAll,
 };
 
-export default exports;
+export default blogService;
