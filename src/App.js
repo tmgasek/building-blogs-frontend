@@ -10,8 +10,16 @@ const App = () => {
   }, []);
 
   console.log(blogs);
-
-  return <div></div>;
+  return (
+    <div>
+      {blogs.map((blog) => (
+        <div style={{ margin: 10 }}>
+          <div>{blog.content} </div>
+          <div>{blog.date}</div>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default App;
