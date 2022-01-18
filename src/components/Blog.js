@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useParams, useHistory } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 
 import { useDispatch } from 'react-redux';
 import { likeBlog, deleteBlog, addComment } from '../reducers/blogReducer';
 
 const Blog = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const id = useParams().id;
   const blogs = useSelector((state) => state.blogs);
@@ -23,7 +23,7 @@ const Blog = () => {
     if (
       window.confirm(`do you want to delete ${blog.title} by ${blog.author}?`)
     ) {
-      history.push('/');
+      navigate('/');
       dispatch(deleteBlog(blog));
     }
   };
@@ -49,7 +49,7 @@ const Blog = () => {
   return (
     <div className="blog" style={blogStyle}>
       <div>
-        {blog.title} by {blog.author}{' '}
+        {blog.title} by {blog.author}
       </div>
       <div>
         <div> {blog.url}</div>
