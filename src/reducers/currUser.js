@@ -1,5 +1,4 @@
 import loginService from '../services/login';
-import userService from '../services/users';
 import storage from '../utils/storage';
 import { setNotification } from './notificationReducer';
 
@@ -9,8 +8,6 @@ const currUserReducer = (state = null, action) => {
       return action.data;
     case 'LOGIN':
       return action.data;
-    case 'REGISTER':
-      return null;
     case 'LOGOUT':
       return null;
     default:
@@ -23,31 +20,6 @@ export const loadUser = () => {
   return {
     type: 'LOAD',
     data: user,
-  };
-};
-
-export const registerUser = ({ username, name, password }) => {
-  return async (dispatch) => {
-    try {
-      const user = await userService.register({
-        username,
-        name,
-        password,
-      });
-      dispatch({
-        type: 'REGISTER',
-      });
-      dispatch(
-        setNotification(
-          'success',
-          `${user.username} registered in successfully`,
-          3000
-        )
-      );
-    } catch (exception) {
-      console.log(exception);
-      dispatch(setNotification('error', 'wrong username / password', 3000));
-    }
   };
 };
 
@@ -86,4 +58,5 @@ export const logoutUser = () => {
     dispatch(setNotification('success', 'logged out successfully', 3000));
   };
 };
+
 export default currUserReducer;

@@ -1,4 +1,5 @@
 import userService from '../services/users';
+import { setNotification } from './notificationReducer';
 
 const userReducer = (state = [], action) => {
   switch (action.type) {
@@ -19,6 +20,8 @@ const userReducer = (state = [], action) => {
             }
           : user
       );
+    case 'REGISTER':
+      return [...state, action.data];
     default:
       return state;
   }
@@ -31,6 +34,32 @@ export const initUsers = () => {
       type: 'INIT_USERS',
       data: users,
     });
+  };
+};
+
+export const registerUser = ({ username, name, password }) => {
+  return async (dispatch) => {
+    try {
+      const user = await userService.register({
+        username,
+        name,
+        password,
+      });
+      dispatch({
+        type: 'REGISTER',
+        data: user,
+      });
+      dispatch(
+        setNotification(
+          'success',
+          `${user.username} registered in successfully`,
+          3000
+        )
+      );
+    } catch (exception) {
+      console.log(exception);
+      dispatch(setNotification('error', 'wrong username / password', 3000));
+    }
   };
 };
 

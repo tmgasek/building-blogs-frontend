@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { registerUser } from '../reducers/currUser';
+import { registerUser } from '../reducers/usersReducer';
 import { useDispatch } from 'react-redux';
 import Toggleable from './Toggleable';
 
@@ -28,10 +28,10 @@ const SignupForm = () => {
         <div>
           username
           <input
-            id="username"
+            id="usernameSignup"
             type="text"
             value={username}
-            name="username"
+            name="usernameSignup"
             onChange={({ target }) => setUsername(target.value)}
           ></input>
         </div>
@@ -48,14 +48,14 @@ const SignupForm = () => {
         <div>
           password
           <input
-            id="password"
+            id="passwordSignup"
             type="password"
             value={password}
-            name="password"
+            name="passwordSignup"
             onChange={({ target }) => setPassword(target.value)}
           ></input>
         </div>
-        <button id="submitBtn" type="submit">
+        <button id="registerBtn" type="submit">
           sign up
         </button>
       </form>

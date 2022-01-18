@@ -21,8 +21,8 @@ const Blogs = () => {
         .map((blog) => (
           <div className="blog" style={blogStyle} key={blog.id}>
             <div>
-              <Link to={`/blogs/${blog.id}`}>{blog.title} </Link>by{' '}
-              {blog.author}{' '}
+              <Link to={`/blogs/${blog.id}`}>{blog.title} </Link>
+              by {blog.author}
             </div>
           </div>
         ))}
