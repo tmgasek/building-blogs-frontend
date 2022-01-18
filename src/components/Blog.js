@@ -1,5 +1,39 @@
 import React, { useState } from 'react';
-const Blog = ({ blog, updateLikes, deleteBlog, user }) => {
+import { useParams, useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
+
+import { useDispatch } from 'react-redux';
+import { likeBlog, deleteBlog, addComment } from '../reducers/blogReducer';
+
+const Blog = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const id = useParams().id;
+  const blogs = useSelector((state) => state.blogs);
+  const currUser = useSelector((state) => state.currUser);
+  const blog = blogs.find((blog) => blog.id === id);
+
+  const [comment, setComment] = useState('');
+
+  const handleLike = (blog) => {
+    dispatch(likeBlog(blog));
+  };
+
+  const handleDelete = (blog) => {
+    if (
+      window.confirm(`do you want to delete ${blog.title} by ${blog.author}?`)
+    ) {
+      history.push('/');
+      dispatch(deleteBlog(blog));
+    }
+  };
+
+  const handleCommentClick = async (e) => {
+    e.preventDefault();
+
+    dispatch(addComment(blog.id, comment));
+  };
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -7,68 +41,42 @@ const Blog = ({ blog, updateLikes, deleteBlog, user }) => {
     borderWidth: 1,
     marginBottom: 5,
   };
-  const [initialView, setInitialView] = useState(true);
 
-  const handleLikeClick = () => {
-    const id = blog.id;
+  if (!blog) {
+    return null;
+  }
 
-    updateLikes(id, {
-      ...blog,
-      likes: blog.likes + 1,
-    });
-  };
-
-  const handleDetailClick = () => {
-    setInitialView(!initialView);
-  };
-
-  const handleDeleteClick = () => {
-    if (
-      window.confirm(`do you want to delete ${blog.title} by ${blog.author}?`)
-    ) {
-      deleteBlog(blog.id);
-    }
-  };
-
-  const simplerView = () => {
-    return (
-      <div className="blog" style={blogStyle}>
-        {blog.title} | by: {blog.author}
-        <button id="toDetailed" onClick={handleDetailClick}>
-          view details
-        </button>
+  return (
+    <div className="blog" style={blogStyle}>
+      <div>
+        {blog.title} by {blog.author}{' '}
       </div>
-    );
-  };
-
-  const detailedView = () => {
-    return (
-      <div className="blog" style={blogStyle}>
-        {blog.title} | by: {blog.author}{' '}
-        <button id="toSimple" onClick={handleDetailClick}>
-          view simple
-        </button>
-        <br /> {blog.url}
-        <br /> <span id="likes">{blog.likes}</span>{' '}
-        <button id="likeBtn" onClick={handleLikeClick}>
+      <div>
+        <div> {blog.url}</div>
+        <div>op: {blog.user.name} </div>
+        <div id="likes">{blog.likes} likes</div>
+        <button id="likeBtn" onClick={() => handleLike(blog)}>
           like
         </button>
-        {user.name === blog.user.name && (
-          <button id="deleteBtn" onClick={handleDeleteClick}>
+        {currUser.name === blog.user.name && (
+          <button id="deleteBtn" onClick={() => handleDelete(blog)}>
             delete
           </button>
         )}
+        <form onSubmit={handleCommentClick}>
+          <input
+            value={comment}
+            onChange={({ target }) => setComment(target.value)}
+          />
+          <button type="submit">add comment</button>
+        </form>
+        <div>
+          <h2>comments</h2>
+          {blog.comments.map((c) => (
+            <div key={c}>{c}</div>
+          ))}
+        </div>
       </div>
-    );
-  };
-
-  return (
-    <div>
-      {initialView === false ? (
-        <div>{detailedView()} </div>
-      ) : (
-        <div>{simplerView()} </div>
-      )}
     </div>
   );
 };

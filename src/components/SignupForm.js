@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { loginUser } from '../reducers/currUser';
+import { registerUser } from '../reducers/currUser';
 import { useDispatch } from 'react-redux';
 import Toggleable from './Toggleable';
 
-const LoginForm = () => {
+const SignupForm = () => {
   const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
-  const handleLogin = async (event) => {
+  const handleSignup = async (event) => {
     event.preventDefault();
     dispatch(
-      loginUser({
+      registerUser({
         username,
+        name,
         password,
       })
     );
@@ -21,8 +23,8 @@ const LoginForm = () => {
   };
 
   return (
-    <Toggleable buttonLabel="login">
-      <form onSubmit={handleLogin}>
+    <Toggleable buttonLabel="signup">
+      <form onSubmit={handleSignup}>
         <div>
           username
           <input
@@ -31,6 +33,16 @@ const LoginForm = () => {
             value={username}
             name="username"
             onChange={({ target }) => setUsername(target.value)}
+          ></input>
+        </div>
+        <div>
+          name
+          <input
+            id="name"
+            type="text"
+            value={name}
+            name="name"
+            onChange={({ target }) => setName(target.value)}
           ></input>
         </div>
         <div>
@@ -44,11 +56,11 @@ const LoginForm = () => {
           ></input>
         </div>
         <button id="submitBtn" type="submit">
-          login
+          sign up
         </button>
       </form>
     </Toggleable>
   );
 };
 
-export default LoginForm;
+export default SignupForm;
