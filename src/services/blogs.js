@@ -18,16 +18,19 @@ const create = async (newObject) => {
     headers: { Authorization: `bearer ${storage.loadUser().token}` },
   };
   const response = await axios.post(baseUrl, newObject, config);
+
   return response.data;
 };
 
 const createComment = async (id, comment) => {
   const response = await axios.post(`${baseUrl}/${id}/comments`, { comment });
+
   return response.data;
 };
 
-const update = async (newObject) => {
+const like = async (newObject) => {
   const response = await axios.put(`${baseUrl}/${newObject.id}`, newObject);
+
   return response.data;
 };
 
@@ -35,6 +38,7 @@ const remove = async (id) => {
   const config = {
     headers: { Authorization: `bearer ${storage.loadUser().token}` },
   };
+
   await axios.delete(`${baseUrl}/${id}`, config);
 };
 
@@ -43,8 +47,8 @@ const blogService = {
   getOne,
   create,
   createComment,
-  update,
   remove,
+  like,
 };
 
 export default blogService;

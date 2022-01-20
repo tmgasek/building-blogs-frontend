@@ -8,10 +8,10 @@ import { likeBlog, deleteBlog, addComment } from '../reducers/blogReducer';
 const Blog = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const id = useParams().id;
+  const slug = useParams().id;
   const blogs = useSelector((state) => state.blogs);
   const currUser = useSelector((state) => state.currUser);
-  const blog = blogs.find((blog) => blog.slug === id);
+  const blog = blogs.find((blog) => blog.slug === slug);
 
   const [comment, setComment] = useState('');
 
