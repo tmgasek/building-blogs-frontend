@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import { useSelector } from 'react-redux';
-
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { likeBlog, deleteBlog, addComment } from '../reducers/blogReducer';
 
 const Blog = () => {
@@ -12,7 +10,6 @@ const Blog = () => {
   const blogs = useSelector((state) => state.blogs);
   const currUser = useSelector((state) => state.currUser);
   const blog = blogs.find((blog) => blog.slug === slug);
-
   const [comment, setComment] = useState('');
 
   const handleLike = (blog) => {
