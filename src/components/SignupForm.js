@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { registerUser } from '../reducers/usersReducer';
 import { useDispatch } from 'react-redux';
 import Toggleable from './Toggleable';
+import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 
 const SignupForm = () => {
   const [username, setUsername] = useState('');
@@ -23,42 +24,46 @@ const SignupForm = () => {
   };
 
   return (
-    <Toggleable buttonLabel="signup">
-      <form onSubmit={handleSignup}>
-        <div>
-          username
-          <input
-            id="usernameSignup"
-            type="text"
-            value={username}
-            name="usernameSignup"
-            onChange={({ target }) => setUsername(target.value)}
-          ></input>
-        </div>
-        <div>
-          name
-          <input
-            id="name"
-            type="text"
-            value={name}
-            name="name"
-            onChange={({ target }) => setName(target.value)}
-          ></input>
-        </div>
-        <div>
-          password
-          <input
-            id="passwordSignup"
-            type="password"
-            value={password}
-            name="passwordSignup"
-            onChange={({ target }) => setPassword(target.value)}
-          ></input>
-        </div>
-        <button id="registerBtn" type="submit">
-          sign up
-        </button>
-      </form>
+    <Toggleable buttonLabel="Sign Up">
+      <h2>Sign Up</h2>
+      <FormControl>
+        <FormLabel my={2} htmlFor="username-signup">
+          Username
+        </FormLabel>
+        <Input
+          type={'text'}
+          id="username-signup"
+          placeholder="Username"
+          value={username}
+          onChange={({ target }) => setUsername(target.value)}
+        />
+
+        <FormLabel my={2} htmlFor="name">
+          Name
+        </FormLabel>
+        <Input
+          type={'text'}
+          id="name"
+          placeholder="Name"
+          value={name}
+          onChange={({ target }) => setName(target.value)}
+        />
+
+        <FormLabel my={2} htmlFor="password-signup">
+          Password
+        </FormLabel>
+        <Input
+          type={'password'}
+          id="password-signup"
+          placeholder="password"
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}
+        />
+
+        <Button my={5} onClick={(e) => handleSignup(e)}>
+          Sign Up
+        </Button>
+      </FormControl>
     </Toggleable>
   );
 };

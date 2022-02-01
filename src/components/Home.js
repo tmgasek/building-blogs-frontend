@@ -1,31 +1,23 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../reducers/currUser';
-import LoginForm from './LoginForm';
-import SignupForm from './SignupForm';
-import BlogForm from './BlogForm';
-import Blogs from './Blogs';
+import { useSelector } from 'react-redux';
+import { SignupForm, LoginForm, BlogForm, Blogs } from './index';
 
 const Home = () => {
-  const dispatch = useDispatch();
   const currUser = useSelector((state) => state.currUser);
 
-  const logOut = () => {
-    dispatch(logoutUser());
-    console.log('logged out');
-  };
+  if (currUser === null) {
+    return (
+      <>
+        <SignupForm />
+        <LoginForm />
+      </>
+    );
+  }
 
-  return currUser === null ? (
-    <>
-      <SignupForm />
-      <LoginForm />
-    </>
-  ) : (
+  return (
     <div>
-      <p>{currUser.name} logged in</p>
-      <button id="logOutBtn" onClick={logOut}>
-        log out
-      </button>
+      <p>Hello {currUser.name}</p>
+
       <BlogForm />
       <Blogs />
     </div>

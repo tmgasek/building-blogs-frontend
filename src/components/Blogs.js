@@ -1,32 +1,34 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link as ReactLink } from 'react-router-dom';
+
+import { Box, Flex, Heading, Link, Text, Divider } from '@chakra-ui/react';
 
 const Blogs = () => {
   const blogs = useSelector((state) => state.blogs);
 
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
-  };
-
   return (
-    <div>
-      <h2>blogs</h2>
-      {blogs
-        .sort((a, b) => b.likes - a.likes)
-        .map((blog) => (
-          <div className="blog" style={blogStyle} key={blog.id}>
-            <div>
-              <Link to={`/blogs/${blog.slug}`}>{blog.title} </Link>
-              by {blog.author}
-            </div>
-          </div>
-        ))}
-    </div>
+    <Box>
+      <Heading my={4}>Popular Blogs</Heading>
+      <Box>
+        {blogs
+          .sort((a, b) => b.likes - a.likes)
+          .map((blog) => (
+            <Box key={blog.id}>
+              <Flex justify={'space-between'} align={'center'} mt={2}>
+                <Link as={ReactLink} to={`/blogs/${blog.slug}`}>
+                  <Text fontSize={'xl'} fontWeight={'bold'}>
+                    {blog.title}
+                  </Text>
+                </Link>
+                <Text>{blog.user.name}</Text>
+              </Flex>
+
+              <Divider />
+            </Box>
+          ))}
+      </Box>
+    </Box>
   );
 };
 

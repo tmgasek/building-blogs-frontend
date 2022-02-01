@@ -35,13 +35,25 @@ export const initBlogs = () => {
 
 export const createBlog = (content) => {
   return async (dispatch) => {
-    const newBlog = await blogService.create(content);
-    dispatch({
-      type: 'CREATE',
-      data: newBlog,
-    });
-    dispatch(addBlogToUser(newBlog));
-    dispatch(setNotification('success', `${newBlog.title} created`, 3000));
+    try {
+      const newBlog = await blogService.create(content);
+      dispatch({
+        type: 'CREATE',
+        data: newBlog,
+      });
+
+      dispatch(addBlogToUser(newBlog));
+
+      dispatch(setNotification('success', `${newBlog.title} created`, 3000));
+    } catch (exception) {
+      dispatch(
+        setNotification(
+          'error',
+          `${exception.response.data.error || 'Problem deleting blog'}`,
+          3000
+        )
+      );
+    }
   };
 };
 
@@ -76,9 +88,16 @@ export const deleteBlog = (blog) => {
         data: blog,
       });
       dispatch(removeBlogFromUser(blog));
+
       dispatch(setNotification('success', `${blog.title} removed`, 3000));
     } catch (exception) {
-      dispatch(setNotification('error', 'you are not the OP', 3000));
+      dispatch(
+        setNotification(
+          'error',
+          `${exception.response.data.error || 'Problem deleting blog'}`,
+          3000
+        )
+      );
     }
   };
 };

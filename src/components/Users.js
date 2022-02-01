@@ -1,32 +1,44 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link as ReactLink } from 'react-router-dom';
+import { Heading } from '@chakra-ui/react';
+import { Link, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
 
 const Users = () => {
+  const currUser = useSelector((state) => state.currUser);
   const users = useSelector((state) => state.users);
 
+  if (!currUser) {
+    return <Heading>You must be logged in to see the users.</Heading>;
+  }
+
+  if (!users) {
+    return <div>LOADING</div>;
+  }
+
   return (
-    <div>
-      <h2>users</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>user</th>
-            <th>blogs created</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>
-                <Link to={`/users/${user.id}`}>{user.name}</Link>
-              </td>
-              <td>{user.blogs.length}</td>
-            </tr>
+    <Table variant={'simple'} colorScheme={'teal'} size={'sm'}>
+      <Thead>
+        <Tr>
+          <Th>Username</Th>
+          <Th>Blogs posted</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {users
+          .sort((a, b) => b.blogs.length - a.blogs.length)
+          .map((user) => (
+            <Tr key={user.username}>
+              <Td>
+                <Link as={ReactLink} to={`/users/${user.id}`}>
+                  {user.username}
+                </Link>
+              </Td>
+              <Td>{user.blogs.length}</Td>
+            </Tr>
           ))}
-        </tbody>
-      </table>
-    </div>
+      </Tbody>
+    </Table>
   );
 };
 

@@ -45,10 +45,12 @@ export const registerUser = ({ username, name, password }) => {
         name,
         password,
       });
+
       dispatch({
         type: 'REGISTER',
         data: user,
       });
+
       dispatch(
         setNotification(
           'success',
@@ -57,13 +59,22 @@ export const registerUser = ({ username, name, password }) => {
         )
       );
     } catch (exception) {
-      console.log(exception);
-      dispatch(setNotification('error', 'wrong username / password', 3000));
+      console.log(exception.response.data.error);
+      dispatch(
+        setNotification(
+          'error',
+          `${
+            exception.response.data.error || 'There was a problem signing up.'
+          }`,
+          3000
+        )
+      );
     }
   };
 };
 
 export const addBlogToUser = (blog) => {
+  console.log(blog);
   return {
     type: 'ADD_BLOG_TO_USER',
     data: blog,

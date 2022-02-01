@@ -1,5 +1,6 @@
 import React, { useState, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
+import { Box, Button, Stack } from '@chakra-ui/react';
 
 const Toggleable = React.forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
@@ -16,15 +17,19 @@ const Toggleable = React.forwardRef((props, ref) => {
   });
 
   return (
-    <div>
-      <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>{props.buttonLabel}</button>
-      </div>
-      <div style={showWhenVisible}>
+    <Box my={4}>
+      <Stack style={hideWhenVisible}>
+        <Button size={'lg'} my={2} onClick={toggleVisibility}>
+          {props.buttonLabel}
+        </Button>
+      </Stack>
+      <Box style={showWhenVisible}>
         {props.children}
-        <button onClick={toggleVisibility}>cancel</button>
-      </div>
-    </div>
+        <Button mb={10} colorScheme={'red'} onClick={toggleVisibility}>
+          Cancel
+        </Button>
+      </Box>
+    </Box>
   );
 });
 

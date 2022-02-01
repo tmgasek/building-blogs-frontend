@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { initBlogs } from './reducers/blogReducer';
 import { loadUser } from './reducers/currUser';
 import { initUsers } from './reducers/usersReducer';
 
-import Notification from './components/Notification';
-import Users from './components/Users';
-import User from './components/User';
-import Blog from './components/Blog';
-import Home from './components/Home';
+import {
+  User,
+  Users,
+  Home,
+  Notification,
+  Layout,
+  BlogPage,
+} from './components';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -22,22 +25,17 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <BrowserRouter>
-        <nav>
-          <Link to="/">home</Link>
-          <br></br>
-          <Link to="/users">users</Link>
-        </nav>
+    <BrowserRouter>
+      <Layout>
         <Notification />
         <Routes>
           <Route path="/users/:id" element={<User />} />
-          <Route path="/blogs/:id" element={<Blog />} />
+          <Route path="/blogs/:id" element={<BlogPage />} />
           <Route path="/users" element={<Users />} />
           <Route path="/" element={<Home />} />
         </Routes>
-      </BrowserRouter>
-    </div>
+      </Layout>
+    </BrowserRouter>
   );
 };
 export default App;
