@@ -8,19 +8,17 @@ const Home = () => {
   if (currUser === null) {
     return (
       <>
-        <SignupForm />
         <LoginForm />
+        <SignupForm />
       </>
     );
   }
 
   return (
-    <div>
-      <p>Hello {currUser.name}</p>
-
+    <>
       <BlogForm />
       <Blogs />
-    </div>
+    </>
   );
 };
 

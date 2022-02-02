@@ -25,7 +25,13 @@ const Toggleable = React.forwardRef((props, ref) => {
       </Stack>
       <Box style={showWhenVisible}>
         {props.children}
-        <Button mb={10} colorScheme={'red'} onClick={toggleVisibility}>
+        <Button
+          mb={5}
+          size={'sm'}
+          colorScheme={'red'}
+          onClick={toggleVisibility}
+          w={'full'}
+        >
           Cancel
         </Button>
       </Box>

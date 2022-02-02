@@ -7,6 +7,7 @@ import {
   Heading,
   Input,
   Text,
+  Divider,
 } from '@chakra-ui/react';
 import { addComment } from '../reducers/blogReducer';
 import { useDispatch } from 'react-redux';
@@ -18,14 +19,15 @@ const Comments = ({ blog }) => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     dispatch(addComment(blog.id, comment));
+    setComment('');
   };
 
   return (
     <div>
-      <Heading size={'lg'} fontWeight={'semibold'} my={4}>
-        Comments
+      <Heading size={'md'} fontWeight={'semibold'} my={4}>
+        {blog.comments.length} Comments
       </Heading>
-      <Box mt={6}>
+      <Box>
         <FormControl>
           <FormLabel htmlFor="comment">Add comment</FormLabel>
           <Input
@@ -39,9 +41,10 @@ const Comments = ({ blog }) => {
         </FormControl>
         <Box>
           {/* ADD A BETTER KEY HERE */}
-          {blog.comments.map((comment) => (
-            <Box key={comment}>
-              <Text>{comment}</Text>
+          {blog.comments.map((comment, index) => (
+            <Box key={index}>
+              <Text my={2}>{comment}</Text>
+              <Divider />
             </Box>
           ))}
         </Box>

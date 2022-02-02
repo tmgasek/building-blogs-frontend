@@ -20,18 +20,15 @@ const User = () => {
     return null;
   }
 
-  console.log(user.blogs);
-
   return (
     <Box>
-      <Heading mb={4}>{user.username}</Heading>
+      <Heading mb={2}>{user.username}</Heading>
       <Text mb={4}>Blogs added:</Text>
       <Stack divider={<StackDivider />}>
         {user.blogs.map((blog) => (
           <Box key={blog.id}>
-            <Text>{blog.title}</Text>
             <Link as={ReactLink} to={`/blogs/${blog.slug}`}>
-              Go to...
+              <Text fontSize={'xl'}>{blog.title}</Text>
             </Link>
           </Box>
         ))}
@@ -41,12 +38,3 @@ const User = () => {
 };
 
 export default User;
-// <div>
-//   <h2>{user.name}</h2>
-//   <h3>added blogs</h3>
-//   <ul>
-//     {user.blogs.map((blog) => (
-//       <li key={blog.id}>{blog.title}</li>
-//     ))}
-//   </ul>
-// </div>

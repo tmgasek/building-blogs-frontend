@@ -1,94 +1,87 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBlog } from '../reducers/blogReducer';
 import Toggleable from './Toggleable';
-import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { FormErrorMessage, FormControl, Input, Button } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
 
 const BlogForm = () => {
-  const [newTitle, setNewTitle] = useState('');
-  const [newAuthor, setNewAuthor] = useState('');
-  const [newUrl, setNewUrl] = useState('');
-  const [newDescription, setNewDescription] = useState('');
+  const dispatch = useDispatch();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
   const blogFormRef = useRef();
 
-  const dispatch = useDispatch();
-
-  const addBlog = (event) => {
-    event.preventDefault();
-
-    if (!newTitle || !newUrl) {
-      return;
-    }
-
+  const addBlog = (data) => {
+    console.log(data);
     const newBlog = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl,
-      description: newDescription,
+      ...data,
     };
-
     dispatch(createBlog(newBlog));
-
-    setNewAuthor('');
-    setNewTitle('');
-    setNewUrl('');
-    setNewDescription('');
-
     blogFormRef.current.toggleVisibility();
   };
 
   return (
-    <Toggleable buttonLabel="Add new blog" ref={blogFormRef}>
-      <FormControl>
-        <FormLabel my={2} htmlFor="">
-          Title
-        </FormLabel>
-        <Input
-          type={'text'}
-          id="Title"
-          placeholder="Title"
-          value={newTitle}
-          onChange={({ target }) => setNewTitle(target.value)}
-        />
+    <Toggleable buttonLabel="Share a new blog" ref={blogFormRef}>
+      <form onSubmit={handleSubmit(addBlog)}>
+        <FormControl isInvalid={errors.title} mb={4}>
+          <Input
+            id="title"
+            placeholder="title"
+            {...register('title', {
+              required: 'This is required',
+              minLength: { value: 4, message: 'Minimum length should be 4' },
+            })}
+          />
+          <FormErrorMessage>
+            {errors.title && errors.title.message}
+          </FormErrorMessage>
+        </FormControl>
 
-        <FormLabel my={2} htmlFor="author">
-          Author
-        </FormLabel>
-        <Input
-          type={'author'}
-          id="author"
-          placeholder="Author"
-          value={newAuthor}
-          onChange={({ target }) => setNewAuthor(target.value)}
-        />
+        <FormControl isInvalid={errors.author} mb={4}>
+          <Input id="author" placeholder="author" {...register('author', {})} />
+          <FormErrorMessage>
+            {errors.author && errors.author.message}
+          </FormErrorMessage>
+        </FormControl>
 
-        <FormLabel my={2} htmlFor="url">
-          URL
-        </FormLabel>
-        <Input
-          type={'url'}
-          id="url"
-          placeholder="URL"
-          value={newUrl}
-          onChange={({ target }) => setNewUrl(target.value)}
-        />
+        <FormControl isInvalid={errors.url} mb={4}>
+          <Input
+            id="url"
+            placeholder="url"
+            {...register('url', {
+              required: 'This is required',
+              minLength: { value: 4, message: 'Minimum length should be 4' },
+            })}
+          />
+          <FormErrorMessage>
+            {errors.url && errors.url.message}
+          </FormErrorMessage>
+        </FormControl>
 
-        <FormLabel my={2} htmlFor="description">
-          Description
-        </FormLabel>
-        <Input
-          type={'description'}
-          id="description"
-          placeholder="Description"
-          value={newDescription}
-          onChange={({ target }) => setNewDescription(target.value)}
-        />
-
-        <Button mt={8} mb={2} onClick={(e) => addBlog(e)}>
-          Add new blog
+        <FormControl isInvalid={errors.description} mb={4}>
+          <Input
+            id="description"
+            placeholder="description"
+            {...register('description', {})}
+          />
+          <FormErrorMessage>
+            {errors.description && errors.description.message}
+          </FormErrorMessage>
+        </FormControl>
+        <Button
+          w={'full'}
+          mb={2}
+          colorScheme="teal"
+          isLoading={isSubmitting}
+          type="submit"
+        >
+          Submit
         </Button>
-      </FormControl>
+      </form>
     </Toggleable>
   );
 };

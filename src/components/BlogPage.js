@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link as ReactLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { likeBlog, deleteBlog } from '../reducers/blogReducer';
-import { Box, Button, Flex, Heading, Link, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Heading,
+  Link,
+  Text,
+} from '@chakra-ui/react';
+import { MdThumbUpOffAlt } from 'react-icons/md';
+
 import Comments from './Comments';
 
 const Blog = () => {
@@ -34,76 +44,63 @@ const Blog = () => {
     <Box>
       <Flex justify={'space-between'} align={'center'}>
         <Box>
-          <Heading mb={2}>{blog.title}</Heading>
-          <Text>by {blog.author}</Text>
+          <Heading>{blog.title}</Heading>
+          <Text as={'i'} fontSize={'sm'}>
+            by {blog.author}
+          </Text>
         </Box>
 
-        <Box>
-          <Box>{blog.likes} likes</Box>
+        <Flex align={'center'} gap={2}>
           {currUser && (
-            <Button my={2} onClick={() => handleLike(blog)}>
-              Like
+            <Button onClick={() => handleLike(blog)}>
+              <MdThumbUpOffAlt />
             </Button>
           )}
-        </Box>
+          <Text fontSize={'2xl'} fontWeight={'semibold'}>
+            {blog.likes}{' '}
+          </Text>
+        </Flex>
       </Flex>
+      <Divider />
 
-      <Box my={4}>
+      <Box>
         <Link href={blog.url} isExternal>
           <Button
             size={'lg'}
+            mt={4}
             w={'full'}
-            bgColor={'green.700'}
+            colorScheme={'green'}
             letterSpacing={'wider'}
           >
             GO TO BLOG
           </Button>
         </Link>
       </Box>
-      <Text>Posted by: {blog.user.username}</Text>
+      <Flex fontSize={'sm'} color={'gray.500'} gap={1}>
+        <Text>Posted by</Text>
+        <Link as={ReactLink} to={`/users/${blog.user.id}`}>
+          {blog.user.username}
+        </Link>
+      </Flex>
 
-      <Text mt={4}>{blog.description}</Text>
+      <Text my={4}>{blog.description}</Text>
+      <Divider my={4} />
 
-      {currUser?.username === blog.user.username && (
-        <Button textAlign={'right'} onClick={() => handleDelete(blog)}>
-          Delete
-        </Button>
-      )}
       <Comments blog={blog} />
+      <Flex alignItems={'end'} justify={'space-between'} mt={10}>
+        <Box></Box>
+        {currUser?.username === blog.user.username && (
+          <Button
+            textAlign={'right'}
+            onClick={() => handleDelete(blog)}
+            colorScheme={'red'}
+          >
+            Delete blog
+          </Button>
+        )}
+      </Flex>
     </Box>
   );
 };
 
 export default Blog;
-
-// <div>
-//   <div>
-//     {blog.title} by {blog.author}
-//   </div>
-//   <div>
-//     <div> {blog.url}</div>
-//     <div>op: {blog.user.name} </div>
-//     <div id="likes">{blog.likes} likes</div>
-//     <button id="likeBtn" onClick={() => handleLike(blog)}>
-//       like
-//     </button>
-//     {currUser.name === blog.user.name && (
-//       <button id="deleteBtn" onClick={() => handleDelete(blog)}>
-//         delete
-//       </button>
-//     )}
-//     <form onSubmit={handleCommentClick}>
-//       <input
-//         value={comment}
-//         onChange={({ target }) => setComment(target.value)}
-//       />
-//       <button type="submit">add comment</button>
-//     </form>
-//     <div>
-//       <h2>comments</h2>
-//       {blog.comments.map((c) => (
-//         <div key={c}>{c}</div>
-//       ))}
-//     </div>
-//   </div>
-// </div>

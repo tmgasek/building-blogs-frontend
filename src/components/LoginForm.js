@@ -1,68 +1,71 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { loginUser } from '../reducers/currUser';
 import { useDispatch } from 'react-redux';
 import Toggleable from './Toggleable';
-
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Input,
-  Button,
-} from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
+import { FormControl, FormErrorMessage, Input, Button } from '@chakra-ui/react';
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const loginFormRef = useRef();
-
   const dispatch = useDispatch();
+  const loginFormRef = useRef();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  const handleLogin = async ({ username, password }) => {
     dispatch(
       loginUser({
         username,
         password,
       })
     );
-    setUsername('');
-    setUsername('');
-    setPassword('');
     loginFormRef.current.toggleVisibility();
   };
 
   return (
     <Toggleable buttonLabel="Login" ref={loginFormRef}>
-      <FormControl isRequired>
-        <FormLabel my={2} htmlFor="username-login">
-          Username
-        </FormLabel>
-        <Input
-          type={'text'}
-          id="username-login"
-          placeholder="Username"
-          value={username}
-          onChange={({ target }) => setUsername(target.value)}
-        />
+      <form onSubmit={handleSubmit(handleLogin)}>
+        <FormControl isInvalid={errors.username} mb={4}>
+          <Input
+            id="username-login"
+            placeholder="username"
+            {...register('username', {
+              required: 'Username required',
+              minLength: { value: 3, message: 'Minimum length should be 3' },
+            })}
+          />
+          <FormErrorMessage>
+            {errors.username && errors.username.message}
+          </FormErrorMessage>
+        </FormControl>
 
-        <FormLabel my={2} htmlFor="password-login">
-          Password
-        </FormLabel>
-        <Input
-          type={'password'}
-          id="password-login"
-          placeholder="password"
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
-        />
+        <FormControl isInvalid={errors.password} mb={4}>
+          <Input
+            id="password-login"
+            type={'password'}
+            placeholder="password"
+            {...register('password', {
+              required: 'Password required',
+              minLength: { value: 4, message: 'Minimum length should be 4' },
+            })}
+          />
+          <FormErrorMessage>
+            {errors.password && errors.password.message}
+          </FormErrorMessage>
+        </FormControl>
 
-        <Button my={5} onClick={(e) => handleLogin(e)}>
-          Log In
+        <Button
+          w={'full'}
+          mb={2}
+          colorScheme="teal"
+          isLoading={isSubmitting}
+          type="submit"
+        >
+          Login
         </Button>
-      </FormControl>
+      </form>
     </Toggleable>
   );
 };

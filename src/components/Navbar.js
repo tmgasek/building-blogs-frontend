@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <Flex as="nav" justify={'space-between'} align={'center'} m={4}>
       <Box>
-        <Heading size={'sm'}>[building_blogs_logo]</Heading>
+        <Heading size={'sm'}>[dev-blogs]</Heading>
       </Box>
       <Flex gap={4} align={'center'}>
         <Link as={ReactLink} to="/">

@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { registerUser } from '../reducers/usersReducer';
 import { useDispatch } from 'react-redux';
 import Toggleable from './Toggleable';
-import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
+import { FormControl, FormErrorMessage, Input, Button } from '@chakra-ui/react';
 
 const SignupForm = () => {
-  const [username, setUsername] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const signUpFormRef = useRef();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
-  const handleSignup = async (event) => {
-    event.preventDefault();
+  const handleSignup = async ({ username, name, password }) => {
     dispatch(
       registerUser({
         username,
@@ -19,51 +22,64 @@ const SignupForm = () => {
         password,
       })
     );
-    setUsername('');
-    setPassword('');
+    signUpFormRef.current.toggleVisibility();
   };
 
   return (
-    <Toggleable buttonLabel="Sign Up">
-      <h2>Sign Up</h2>
-      <FormControl>
-        <FormLabel my={2} htmlFor="username-signup">
-          Username
-        </FormLabel>
-        <Input
-          type={'text'}
-          id="username-signup"
-          placeholder="Username"
-          value={username}
-          onChange={({ target }) => setUsername(target.value)}
-        />
+    <Toggleable buttonLabel="Sign Up" ref={signUpFormRef}>
+      <form onSubmit={handleSubmit(handleSignup)}>
+        <FormControl isInvalid={errors.username} mb={4}>
+          <Input
+            id="username-signup"
+            placeholder="username"
+            {...register('username', {
+              required: 'Username required',
+              minLength: { value: 3, message: 'Minimum length should be 3' },
+            })}
+          />
+          <FormErrorMessage>
+            {errors.username && errors.username.message}
+          </FormErrorMessage>
+        </FormControl>
 
-        <FormLabel my={2} htmlFor="name">
-          Name
-        </FormLabel>
-        <Input
-          type={'text'}
-          id="name"
-          placeholder="Name"
-          value={name}
-          onChange={({ target }) => setName(target.value)}
-        />
+        <FormControl isInvalid={errors.name} mb={4}>
+          <Input
+            id="name"
+            placeholder="name"
+            {...register('name', {
+              required: 'name required',
+            })}
+          />
+          <FormErrorMessage>
+            {errors.name && errors.name.message}
+          </FormErrorMessage>
+        </FormControl>
 
-        <FormLabel my={2} htmlFor="password-signup">
-          Password
-        </FormLabel>
-        <Input
-          type={'password'}
-          id="password-signup"
-          placeholder="password"
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
-        />
+        <FormControl isInvalid={errors.password} mb={4}>
+          <Input
+            id="password-signup"
+            type={'password'}
+            placeholder="password"
+            {...register('password', {
+              required: 'Password required',
+              minLength: { value: 4, message: 'Minimum length should be 4' },
+            })}
+          />
+          <FormErrorMessage>
+            {errors.password && errors.password.message}
+          </FormErrorMessage>
+        </FormControl>
 
-        <Button my={5} onClick={(e) => handleSignup(e)}>
+        <Button
+          w={'full'}
+          mb={2}
+          colorScheme="teal"
+          isLoading={isSubmitting}
+          type="submit"
+        >
           Sign Up
         </Button>
-      </FormControl>
+      </form>
     </Toggleable>
   );
 };
