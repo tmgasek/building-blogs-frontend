@@ -15,7 +15,7 @@ import { MdThumbUpOffAlt } from 'react-icons/md';
 
 import Comments from './Comments';
 
-const Blog = () => {
+const BlogPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const slug = useParams().id;
@@ -103,4 +103,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default BlogPage;

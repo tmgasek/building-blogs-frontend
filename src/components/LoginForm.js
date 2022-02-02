@@ -62,6 +62,7 @@ const LoginForm = () => {
           colorScheme="teal"
           isLoading={isSubmitting}
           type="submit"
+          id="loginSubmitBtn"
         >
           Login
         </Button>
