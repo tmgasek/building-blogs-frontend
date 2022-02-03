@@ -44,12 +44,15 @@ export const createBlog = (content) => {
 
       dispatch(addBlogToUser(newBlog));
 
-      dispatch(setNotification('success', `${newBlog.title} created`, 3000));
+      dispatch(setNotification('success', `${newBlog.title} posted!`, 3000));
     } catch (exception) {
       dispatch(
         setNotification(
           'error',
-          `${exception.response.data.error || 'Problem deleting blog'}`,
+          `${
+            exception.response.data.error ||
+            'Blog was not posted. Something went wrong...'
+          }`,
           3000
         )
       );

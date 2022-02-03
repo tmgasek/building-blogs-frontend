@@ -4,6 +4,7 @@ import { Link as ReactLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
   Box,
+  Flex,
   Heading,
   Link,
   Stack,
@@ -23,14 +24,14 @@ const User = () => {
   return (
     <Box>
       <Heading mb={2}>{user.username}</Heading>
-      <Text mb={4}>Blogs added:</Text>
+      <Text mb={4}>Posts:</Text>
       <Stack divider={<StackDivider />}>
         {user.blogs.map((blog) => (
-          <Box key={blog.id}>
+          <Flex key={blog.id} justify={'space-between'} align={'center'}>
             <Link as={ReactLink} to={`/blogs/${blog.slug}`}>
               <Text fontSize={'xl'}>{blog.title}</Text>
             </Link>
-          </Box>
+          </Flex>
         ))}
       </Stack>
     </Box>

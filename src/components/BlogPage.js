@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useParams, useNavigate, Link as ReactLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { likeBlog, deleteBlog } from '../reducers/blogReducer';
@@ -9,6 +8,13 @@ import {
   Flex,
   Heading,
   Link,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
   Text,
 } from '@chakra-ui/react';
 import { MdThumbUpOffAlt } from 'react-icons/md';
@@ -28,12 +34,8 @@ const BlogPage = () => {
   };
 
   const handleDelete = (blog) => {
-    if (
-      window.confirm(`do you want to delete ${blog.title} by ${blog.author}?`)
-    ) {
-      navigate('/');
-      dispatch(deleteBlog(blog));
-    }
+    dispatch(deleteBlog(blog));
+    navigate('/');
   };
 
   if (!blog) {
@@ -52,16 +54,15 @@ const BlogPage = () => {
 
         <Flex align={'center'} gap={2}>
           {currUser && (
-            <Button onClick={() => handleLike(blog)}>
+            <Button onClick={() => handleLike(blog)} id="likeBtn">
               <MdThumbUpOffAlt />
             </Button>
           )}
-          <Text fontSize={'2xl'} fontWeight={'semibold'}>
-            {blog.likes}{' '}
+          <Text fontSize={'2xl'} fontWeight={'semibold'} id="likes">
+            {blog.likes}
           </Text>
         </Flex>
       </Flex>
-      <Divider />
 
       <Box>
         <Link href={blog.url} isExternal>
@@ -69,14 +70,14 @@ const BlogPage = () => {
             size={'lg'}
             mt={4}
             w={'full'}
-            colorScheme={'green'}
+            colorScheme={'themeDark'}
             letterSpacing={'wider'}
           >
             GO TO BLOG
           </Button>
         </Link>
       </Box>
-      <Flex fontSize={'sm'} color={'gray.500'} gap={1}>
+      <Flex my={1} fontSize={'sm'} color={'gray.500'} gap={1}>
         <Text>Posted by</Text>
         <Link as={ReactLink} to={`/users/${blog.user.id}`}>
           {blog.user.username}
@@ -87,16 +88,35 @@ const BlogPage = () => {
       <Divider my={4} />
 
       <Comments blog={blog} />
+
       <Flex alignItems={'end'} justify={'space-between'} mt={10}>
         <Box></Box>
         {currUser?.username === blog.user.username && (
-          <Button
-            textAlign={'right'}
-            onClick={() => handleDelete(blog)}
-            colorScheme={'red'}
-          >
-            Delete blog
-          </Button>
+          <Popover>
+            <PopoverTrigger>
+              <Button colorScheme={'red'} id="deleteBtn">
+                Delete
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverHeader>Confirmation!</PopoverHeader>
+              <Button
+                textAlign={'right'}
+                w={'fit-content'}
+                m={2}
+                onClick={() => handleDelete(blog)}
+                colorScheme={'red'}
+                id="deleteBtnConfirm"
+              >
+                Delete blog
+              </Button>
+              <PopoverBody>
+                Are you sure you want to delete your blog?
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
         )}
       </Flex>
     </Box>

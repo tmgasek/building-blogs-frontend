@@ -38,13 +38,15 @@ export const loginUser = ({ username, password }) => {
       dispatch(
         setNotification(
           'success',
-          `${user.username} logged in successfully`,
+          `${user.username} logged in successfully.`,
           3000
         )
       );
     } catch (exception) {
       console.log(exception);
-      dispatch(setNotification('error', 'wrong username / password', 3000));
+      dispatch(
+        setNotification('error', 'Wrong username / password, try again.', 3000)
+      );
     }
   };
 };
@@ -55,7 +57,7 @@ export const logoutUser = () => {
     dispatch({
       type: 'LOGOUT',
     });
-    dispatch(setNotification('success', 'logged out successfully', 3000));
+    dispatch(setNotification('success', 'Logged out successfully.', 3000));
   };
 };
 

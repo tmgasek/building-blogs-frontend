@@ -10,14 +10,14 @@ const Blogs = () => {
   return (
     <Box>
       <Heading my={4}>Popular Blogs</Heading>
-      <Box>
+      <Box id="BlogListContainer">
         {blogs
           .sort((a, b) => b.likes - a.likes)
           .map((blog) => (
             <Box key={blog.id}>
               <Flex justify={'space-between'} align={'center'} mt={2}>
                 <Link as={ReactLink} to={`/blogs/${blog.slug}`}>
-                  <Text fontSize={'xl'} fontWeight={'bold'}>
+                  <Text fontSize={'xl'} fontWeight={'bold'} id="blogLink">
                     {blog.title}
                   </Text>
                 </Link>

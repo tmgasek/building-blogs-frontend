@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBlog } from '../reducers/blogReducer';
 import Toggleable from './Toggleable';
@@ -11,17 +11,18 @@ const BlogForm = () => {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm();
 
   const blogFormRef = useRef();
 
   const addBlog = (data) => {
-    console.log(data);
     const newBlog = {
       ...data,
     };
     dispatch(createBlog(newBlog));
     blogFormRef.current.toggleVisibility();
+    reset();
   };
 
   return (
@@ -29,6 +30,7 @@ const BlogForm = () => {
       <form onSubmit={handleSubmit(addBlog)}>
         <FormControl isInvalid={errors.title} mb={4}>
           <Input
+            variant={'filled'}
             id="title"
             placeholder="title"
             {...register('title', {
@@ -42,7 +44,12 @@ const BlogForm = () => {
         </FormControl>
 
         <FormControl isInvalid={errors.author} mb={4}>
-          <Input id="author" placeholder="author" {...register('author', {})} />
+          <Input
+            variant={'filled'}
+            id="author"
+            placeholder="author"
+            {...register('author', {})}
+          />
           <FormErrorMessage>
             {errors.author && errors.author.message}
           </FormErrorMessage>
@@ -50,6 +57,7 @@ const BlogForm = () => {
 
         <FormControl isInvalid={errors.url} mb={4}>
           <Input
+            variant={'filled'}
             id="url"
             placeholder="url"
             {...register('url', {
@@ -64,6 +72,7 @@ const BlogForm = () => {
 
         <FormControl isInvalid={errors.description} mb={4}>
           <Input
+            variant={'filled'}
             id="description"
             placeholder="description"
             {...register('description', {})}
@@ -73,9 +82,10 @@ const BlogForm = () => {
           </FormErrorMessage>
         </FormControl>
         <Button
+          id="submitBlogBtn"
           w={'full'}
-          mb={2}
-          colorScheme="teal"
+          my={2}
+          colorScheme="themeDark"
           isLoading={isSubmitting}
           type="submit"
         >

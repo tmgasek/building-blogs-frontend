@@ -54,7 +54,7 @@ export const registerUser = ({ username, name, password }) => {
       dispatch(
         setNotification(
           'success',
-          `${user.username} registered in successfully`,
+          `${user.username} registered in successfully, please log in.`,
           3000
         )
       );
@@ -74,7 +74,6 @@ export const registerUser = ({ username, name, password }) => {
 };
 
 export const addBlogToUser = (blog) => {
-  console.log(blog);
   return {
     type: 'ADD_BLOG_TO_USER',
     data: blog,

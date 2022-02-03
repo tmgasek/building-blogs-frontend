@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
 import {
   Box,
   Button,
   FormControl,
-  FormLabel,
   Heading,
   Input,
   Text,
   Divider,
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import { addComment } from '../reducers/blogReducer';
 import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 
 const Comments = ({ blog }) => {
   const dispatch = useDispatch();
-  const [comment, setComment] = useState('');
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm();
 
-  const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-    dispatch(addComment(blog.id, comment));
-    setComment('');
+  const handleCommentSubmit = (data) => {
+    dispatch(addComment(blog.id, data.comment.trim()));
+    reset();
   };
 
   return (
@@ -28,17 +32,32 @@ const Comments = ({ blog }) => {
         {blog.comments.length} Comments
       </Heading>
       <Box>
-        <FormControl>
-          <FormLabel htmlFor="comment">Add comment</FormLabel>
-          <Input
-            id="comment"
-            value={comment}
-            onChange={({ target }) => setComment(target.value)}
-          />
-          <Button my={2} onClick={handleCommentSubmit}>
-            Add
+        <form onSubmit={handleSubmit(handleCommentSubmit)}>
+          <FormControl isInvalid={errors.comment} mb={2}>
+            <Input
+              variant={'filled'}
+              id="comment"
+              placeholder="comment"
+              {...register('comment', {
+                required: 'This is required',
+                minLength: { value: 4, message: 'Minimum length should be 4' },
+                pattern: { value: /.*\S.*/, message: 'Empty!' },
+              })}
+            />
+            <FormErrorMessage>
+              {errors.comment && errors.comment.message}
+            </FormErrorMessage>
+          </FormControl>
+          <Button
+            id="submitBlogBtn"
+            mb={2}
+            isLoading={isSubmitting}
+            type="submit"
+          >
+            Comment
           </Button>
-        </FormControl>
+        </form>
+
         <Box>
           {/* ADD A BETTER KEY HERE */}
           {blog.comments.map((comment, index) => (
