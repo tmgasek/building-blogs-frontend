@@ -24,12 +24,14 @@ const User = () => {
   return (
     <Box>
       <Heading mb={2}>{user.username}</Heading>
-      <Text mb={4}>Posts:</Text>
+      <Heading fontWeight={'light'} size={'md'} letterSpacing={'wide'} mb={6}>
+        Posts:
+      </Heading>
       <Stack divider={<StackDivider />}>
         {user.blogs.map((blog) => (
           <Flex key={blog.id} justify={'space-between'} align={'center'}>
-            <Link as={ReactLink} to={`/blogs/${blog.slug}`}>
-              <Text fontSize={'xl'}>{blog.title}</Text>
+            <Link as={ReactLink} to={`/blogs/${blog.slug}`} noOfLines={2}>
+              <Text fontSize={['sm', 'xl']}>{blog.title}</Text>
             </Link>
           </Flex>
         ))}

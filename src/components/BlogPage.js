@@ -44,9 +44,13 @@ const BlogPage = () => {
 
   return (
     <Box>
-      <Flex justify={'space-between'} align={'center'}>
+      <Flex
+        justify={'space-between'}
+        align={['flex-start', 'center']}
+        flexDir={['column', 'row']}
+      >
         <Box>
-          <Heading>{blog.title}</Heading>
+          <Heading fontSize={['xl', '2xl']}>{blog.title}</Heading>
           {blog.author && (
             <Text as={'i'} fontSize={'sm'}>
               by {blog.author}
@@ -56,7 +60,12 @@ const BlogPage = () => {
 
         <Flex align={'center'} gap={2}>
           {currUser && (
-            <Button onClick={() => handleLike(blog)} id="likeBtn">
+            <Button
+              mt={2}
+              size={'sm'}
+              onClick={() => handleLike(blog)}
+              id="likeBtn"
+            >
               <MdThumbUpOffAlt />
             </Button>
           )}

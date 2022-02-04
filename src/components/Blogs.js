@@ -11,19 +11,23 @@ const Blogs = () => {
 
   return (
     <Box>
-      <Heading my={4}>Popular Blogs</Heading>
+      <Heading my={4} fontSize={['xl', '3xl']} letterSpacing={'wide'}>
+        Popular Blogs
+      </Heading>
       <Box id="BlogListContainer">
         {blogs
           .sort((a, b) => b.likes - a.likes)
           .map((blog) => (
             <Box key={blog.id}>
               <Flex justify={'space-between'} align={'center'} mt={2}>
-                <Link as={ReactLink} to={`/blogs/${blog.slug}`}>
-                  <Text fontSize={'xl'} fontWeight={'bold'} id="blogLink">
+                <Link as={ReactLink} to={`/blogs/${blog.slug}`} noOfLines={2}>
+                  <Text fontSize={['sm', 'xl']} id="blogLink">
                     {blog.title}
                   </Text>
                 </Link>
-                <Text>{blog.user?.name}</Text>
+                <Text fontSize={['sm', 'xl']} ml={2}>
+                  {blog.user?.name}
+                </Text>
               </Flex>
 
               <Divider />
