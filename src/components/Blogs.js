@@ -7,6 +7,8 @@ import { Box, Flex, Heading, Link, Text, Divider } from '@chakra-ui/react';
 const Blogs = () => {
   const blogs = useSelector((state) => state.blogs);
 
+  console.log(blogs);
+
   return (
     <Box>
       <Heading my={4}>Popular Blogs</Heading>
@@ -21,7 +23,7 @@ const Blogs = () => {
                     {blog.title}
                   </Text>
                 </Link>
-                <Text>{blog.user.name}</Text>
+                <Text>{blog.user?.name}</Text>
               </Flex>
 
               <Divider />

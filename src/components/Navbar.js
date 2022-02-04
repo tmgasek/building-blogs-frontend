@@ -34,7 +34,11 @@ const Navbar = () => {
     <Box as="nav" pb={6}>
       <Flex justify={'space-between'} align={'center'} my={4}>
         <Flex justify={'center'} align={'center'}>
-          <Heading size={'sm'}>[dev-blogs]</Heading>
+          <Heading size={'sm'}>
+            <Link as={ReactLink} to="/">
+              [dev-blogs]
+            </Link>
+          </Heading>
 
           <Button
             mx={2}
@@ -66,7 +70,8 @@ const Navbar = () => {
               size={'sm'}
               id="logOutBtn"
               onClick={logOut}
-              _hover={{ background: 'red.500' }}
+              variant={'ghost'}
+              colorScheme={'red'}
               borderRadius={'lg'}
               w={'fit-content'}
             >
@@ -84,16 +89,13 @@ const Navbar = () => {
               aria-label="Options"
             />
             <MenuList>
-              <Link as={ReactLink} to="/">
-                <MenuItem>Home</MenuItem>
-              </Link>
               {currUser && (
                 <Link as={ReactLink} to="/users ">
                   <MenuItem>Users</MenuItem>
                 </Link>
               )}
               <Text onClick={toggleColorMode}>
-                <MenuItem>
+                <MenuItem my={4}>
                   {colorMode === 'light' ? <BsMoon /> : <BsSun />}
                 </MenuItem>
               </Text>

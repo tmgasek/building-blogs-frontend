@@ -47,9 +47,11 @@ const BlogPage = () => {
       <Flex justify={'space-between'} align={'center'}>
         <Box>
           <Heading>{blog.title}</Heading>
-          <Text as={'i'} fontSize={'sm'}>
-            by {blog.author}
-          </Text>
+          {blog.author && (
+            <Text as={'i'} fontSize={'sm'}>
+              by {blog.author}
+            </Text>
+          )}
         </Box>
 
         <Flex align={'center'} gap={2}>
@@ -79,8 +81,8 @@ const BlogPage = () => {
       </Box>
       <Flex my={1} fontSize={'sm'} color={'gray.500'} gap={1}>
         <Text>Posted by</Text>
-        <Link as={ReactLink} to={`/users/${blog.user.id}`}>
-          {blog.user.username}
+        <Link as={ReactLink} to={`/users/${blog.user?.id}`}>
+          {blog.user?.username}
         </Link>
       </Flex>
 
@@ -91,10 +93,10 @@ const BlogPage = () => {
 
       <Flex alignItems={'end'} justify={'space-between'} mt={10}>
         <Box></Box>
-        {currUser?.username === blog.user.username && (
-          <Popover>
+        {currUser?.username === blog.user?.username && (
+          <Popover id="deleteBtn">
             <PopoverTrigger>
-              <Button colorScheme={'red'} id="deleteBtn">
+              <Button colorScheme={'red'} variant={'ghost'}>
                 Delete
               </Button>
             </PopoverTrigger>

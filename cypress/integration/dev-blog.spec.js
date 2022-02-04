@@ -81,7 +81,7 @@ describe('Blog app', function () {
 
       it('a blog can be deleted by its poster', function () {
         cy.get('#blogLink').click();
-        cy.get('#deleteBtn').click();
+        cy.get('#popover-trigger-deleteBtn').click();
         cy.get('#deleteBtnConfirm').click();
         cy.get('#BlogListContainer').should('not.contain', 'cy title');
         cy.get('.success').should('contain', 'cy title removed');

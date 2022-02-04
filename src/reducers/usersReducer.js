@@ -54,7 +54,7 @@ export const registerUser = ({ username, name, password }) => {
       dispatch(
         setNotification(
           'success',
-          `${user.username} registered in successfully, please log in.`,
+          `${user.username} registered successfully, please log in.`,
           3000
         )
       );
