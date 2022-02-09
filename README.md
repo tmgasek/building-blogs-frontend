@@ -1,5 +1,7 @@
 # Dev Blogs
 
+[link to backend](https://github.com/tmgasek/dev-blogs-backend)
+
 Full-stack MERN application. Users can sign up and create posts linking to useful programming resources. Can be thought of as a public bookmark manager, with liking, comments, and CRUD operations.
 
 ### Technologies used:
