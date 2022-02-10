@@ -50,6 +50,7 @@ const Navbar = () => {
             }}
             color={colorMode === 'light' ? 'white' : 'black'}
             bg={colorMode === 'light' ? 'gray.500' : 'yellow.500'}
+            aria-label={'Theme switch'}
           >
             {colorMode === 'light' ? <BsMoon /> : <BsSun />}
           </Button>
@@ -101,7 +102,7 @@ const Navbar = () => {
               </Text>
               {currUser && (
                 <Box
-                  id="logOutBtn"
+                  id="logOutBtnMobile"
                   onClick={logOut}
                   bg={'red.600'}
                   borderRadius={'lg'}

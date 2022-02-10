@@ -5,8 +5,6 @@ import { Box, Flex, Heading, Link, Text, Divider } from '@chakra-ui/react';
 const Blogs = () => {
   const blogs = useSelector((state) => state.blogs);
 
-  console.log(blogs);
-
   return (
     <Box>
       <Heading my={4} fontSize={['xl', '3xl']} letterSpacing={'wide'}>
