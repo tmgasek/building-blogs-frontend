@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link as ReactLink } from 'react-router-dom';
 import { Heading } from '@chakra-ui/react';

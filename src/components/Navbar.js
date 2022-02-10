@@ -1,3 +1,7 @@
+import { Link as ReactLink, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { BsMoon, BsSun } from 'react-icons/bs';
+import { MdOutlineMenu } from 'react-icons/md';
 import {
   Box,
   Button,
@@ -12,10 +16,6 @@ import {
   Text,
   useColorMode,
 } from '@chakra-ui/react';
-import { BsMoon, BsSun } from 'react-icons/bs';
-import { MdOutlineMenu } from 'react-icons/md';
-import { Link as ReactLink, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../reducers/currUser';
 
 const Navbar = () => {

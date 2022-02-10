@@ -1,6 +1,5 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
-import { SignupForm, LoginForm, BlogForm, Blogs } from './index';
+import { SignupForm, LoginForm, BlogForm, Blogs, GuestLogin } from './index';
 
 const Home = () => {
   const currUser = useSelector((state) => state.currUser);
@@ -8,6 +7,7 @@ const Home = () => {
   if (currUser === null) {
     return (
       <>
+        <GuestLogin />
         <LoginForm />
         <SignupForm />
       </>

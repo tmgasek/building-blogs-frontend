@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
-import { loginUser } from '../reducers/currUser';
+import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import Toggleable from './Toggleable';
 import { useForm } from 'react-hook-form';
 import { FormControl, FormErrorMessage, Input, Button } from '@chakra-ui/react';
+import { loginUser } from '../reducers/currUser';
+import Toggleable from './Toggleable';
 
 const LoginForm = () => {
   const dispatch = useDispatch();

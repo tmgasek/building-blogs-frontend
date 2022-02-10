@@ -9,3 +9,4 @@ export { default as Toggleable } from './Toggleable';
 export { default as User } from './User';
 export { default as Users } from './Users';
 export { default as Layout } from './Layout';
+export { default as GuestLogin } from './GuestLogin';

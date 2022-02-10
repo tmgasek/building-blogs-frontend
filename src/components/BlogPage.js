@@ -1,6 +1,5 @@
 import { useParams, useNavigate, Link as ReactLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { likeBlog, deleteBlog } from '../reducers/blogReducer';
 import {
   Box,
   Button,
@@ -18,7 +17,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { MdThumbUpOffAlt } from 'react-icons/md';
-
+import { likeBlog, deleteBlog } from '../reducers/blogReducer';
 import Comments from './Comments';
 
 const BlogPage = () => {

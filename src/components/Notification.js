@@ -1,6 +1,5 @@
-import { Box, Alert, AlertIcon, AlertTitle } from '@chakra-ui/react';
-import React from 'react';
 import { useSelector } from 'react-redux';
+import { Box, Alert, AlertIcon, AlertTitle } from '@chakra-ui/react';
 
 const Notification = () => {
   const notification = useSelector((state) => state.notification);
@@ -9,8 +8,8 @@ const Notification = () => {
     return null;
   }
   return (
-    <Box>
-      {notification.className === '.error' ? (
+    <Box my={4}>
+      {notification.className === 'error' ? (
         <Box className={notification.className}>
           <Alert status="error">
             <AlertIcon />

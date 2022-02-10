@@ -1,3 +1,5 @@
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import {
   Box,
   Button,
@@ -9,8 +11,6 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/react';
 import { addComment } from '../reducers/blogReducer';
-import { useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
 
 const Comments = ({ blog }) => {
   const dispatch = useDispatch();

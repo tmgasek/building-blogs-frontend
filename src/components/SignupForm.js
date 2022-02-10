@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
-import { registerUser } from '../reducers/usersReducer';
+import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import Toggleable from './Toggleable';
 import { useForm } from 'react-hook-form';
 import { FormControl, FormErrorMessage, Input, Button } from '@chakra-ui/react';
+import Toggleable from './Toggleable';
+import { registerUser } from '../reducers/usersReducer';
 
 const SignupForm = () => {
   const dispatch = useDispatch();
